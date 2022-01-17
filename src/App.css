@@ -31,4 +31,6 @@
 
 .App button{
   background: lightgray;
+  color: black;
+  border-radius: 10%;
 }
