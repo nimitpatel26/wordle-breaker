@@ -30,9 +30,16 @@ class App extends React.Component {
     let invalidWordsList = [];
 
     try {
-      correctPosList = this.state.correctPosition.split((',')).map(word => parseInt(word.trim()));
-      incorrectPosList = this.state.incorrectPosition.split((',')).map(word => parseInt(word.trim()));
-      invalidWordsList = Array.from(new Set(this.state.invalidWords.split(('')).map(word => word.trim())));
+      if (this.state.correctPosition.length !== 0) {
+        correctPosList = this.state.correctPosition.split((',')).map(word => parseInt(word.trim()));
+      }
+      if (this.state.incorrectPosition.length !== 0){
+        incorrectPosList = this.state.incorrectPosition.split((',')).map(word => parseInt(word.trim()));
+      }
+
+      if (this.state.invalidWords.length !== 0) {
+        invalidWordsList = Array.from(new Set(this.state.invalidWords.split(('')).map(word => word.trim())));
+      }
 
     }catch(e){
       this.setState({
@@ -61,7 +68,6 @@ class App extends React.Component {
         invalidWords: invalidWordsList
       })
     });
-    // let resp = await fetch(url);
 
     if (resp.status === 200) {
 
@@ -71,7 +77,7 @@ class App extends React.Component {
       })
     } else {
         this.setState({
-            status: "Failed to get next guess list!",
+            status: "Failed to get the next guess list!",
         })
     }
 
@@ -120,7 +126,7 @@ class App extends React.Component {
                    placeholder="ou"/>
             <br/>
 
-            <button type={"submit"}>Get Next Possible Guesses!</button>
+            <button type={"submit"}>Get The Next Possible Guesses!</button>
           </form>
           <div>
             <h3>{this.state.output}</h3>

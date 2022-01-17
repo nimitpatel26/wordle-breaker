@@ -81,6 +81,7 @@ const handler = async (event) => {
 
     }
   } catch (error) {
+    console.log(error);
     return { statusCode: 500, body: "Unable to get next possible guess list!" }
   }
 }
