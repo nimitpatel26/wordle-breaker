@@ -8,17 +8,17 @@ class App extends React.Component {
     this.state = {
 
       guess: "",
-      correctPosition: "",
-      incorrectPosition: "",
-      invalidWords: "",
+      correctPositions: "",
+      incorrectPositions: "",
+      invalidChars: "",
       output: "",
     }
 
 
     this.changeGuess = this.changeGuess.bind(this);
-    this.changeCorrectPosition = this.changeCorrectPosition.bind(this);
-    this.changeIncorrectPosition = this.changeIncorrectPosition.bind(this);
-    this.changeInvalidWords = this.changeInvalidWords.bind(this);
+    this.changeCorrectPositions = this.changeCorrectPositions.bind(this);
+    this.changeIncorrectPositions = this.changeIncorrectPositions.bind(this);
+    this.changeInvalidChars = this.changeInvalidChars.bind(this);
     this.formSubmitted = this.formSubmitted.bind(this);
   }
 
@@ -27,18 +27,30 @@ class App extends React.Component {
 
     let correctPosList = [];
     let incorrectPosList = [];
-    let invalidWordsList = [];
+    let invalidCharsList = [];
 
     try {
-      if (this.state.correctPosition.length !== 0) {
-        correctPosList = this.state.correctPosition.split((',')).map(word => parseInt(word.trim()));
+      if (this.state.correctPositions.length !== 0) {
+        correctPosList = this.state.correctPositions.split((',')).map(word => parseInt(word.trim()));
       }
-      if (this.state.incorrectPosition.length !== 0){
-        incorrectPosList = this.state.incorrectPosition.split((',')).map(word => parseInt(word.trim()));
+      if (this.state.incorrectPositions.length !== 0){
+        incorrectPosList = this.state.incorrectPositions.split((',')).map(word => parseInt(word.trim()));
       }
 
-      if (this.state.invalidWords.length !== 0) {
-        invalidWordsList = Array.from(new Set(this.state.invalidWords.split(('')).map(word => word.trim())));
+      if (this.state.invalidChars.length !== 0) {
+        invalidCharsList = Array.from(new Set(this.state.invalidChars.split(('')).map(word => word.trim())));
+      }
+
+      for(let i of correctPosList){
+        if (isNaN(i) || i >= this.state.guess.length){
+          throw "Invalid index!";
+        }
+      }
+
+      for(let i of incorrectPosList){
+        if (isNaN(i) || i >= this.state.guess.length){
+          throw "Invalid index!";
+        }
       }
 
     }catch(e){
@@ -65,7 +77,7 @@ class App extends React.Component {
         guess: this.state.guess,
         correctPositions: correctPosList,
         incorrectPositions: incorrectPosList,
-        invalidWords: invalidWordsList
+        invalidChars: invalidCharsList
       })
     });
 
@@ -87,16 +99,16 @@ class App extends React.Component {
     this.setState({guess: e.target.value});
   }
 
-  changeCorrectPosition(e){
-    this.setState({correctPosition: e.target.value});
+  changeCorrectPositions(e){
+    this.setState({correctPositions: e.target.value});
   }
 
-  changeIncorrectPosition(e){
-    this.setState({incorrectPosition: e.target.value});
+  changeIncorrectPositions(e){
+    this.setState({incorrectPositions: e.target.value});
   }
 
-  changeInvalidWords(e){
-    this.setState({invalidWords: e.target.value});
+  changeInvalidChars(e){
+    this.setState({invalidChars: e.target.value});
   }
 
 
@@ -112,17 +124,17 @@ class App extends React.Component {
             <br/>
 
             <label>Correct Positions:</label>
-            <input value={this.state.correctPosition} onChange={this.changeCorrectPosition} id="guess"
+            <input value={this.state.correctPositions} onChange={this.changeCorrectPositions} id="correctPositions"
                    placeholder="4"/>
             <br/>
 
             <label>Incorrect Positions:</label>
-            <input value={this.state.incorrectPosition} onChange={this.changeIncorrectPosition} id="incorrectPosition"
+            <input value={this.state.incorrectPositions} onChange={this.changeIncorrectPositions} id="incorrectPositions"
                    placeholder="0, 3"/>
             <br/>
 
-            <label>Invalid Words:</label>
-            <input value={this.state.invalidWords} onChange={this.changeInvalidWords} id="invalidWords"
+            <label>Invalid Characters:</label>
+            <input value={this.state.invalidChars} onChange={this.changeInvalidChars} id="invalidChars"
                    placeholder="ou"/>
             <br/>
 

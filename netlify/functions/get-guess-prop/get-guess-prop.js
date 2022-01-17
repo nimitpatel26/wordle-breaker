@@ -44,7 +44,7 @@ function getNextGuessList(guess, guessProp){
     }
 
     // invalid word check
-    for (let c of guessProp.invalidWords){
+    for (let c of guessProp.invalidChars){
       if (word.includes(c)){
         wordValid = false;
         break;
