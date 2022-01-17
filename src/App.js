@@ -107,17 +107,17 @@ class App extends React.Component {
 
             <label>Correct Positions:</label>
             <input value={this.state.correctPosition} onChange={this.changeCorrectPosition} id="guess"
-                   placeholder="4" required/>
+                   placeholder="4"/>
             <br/>
 
             <label>Incorrect Positions:</label>
             <input value={this.state.incorrectPosition} onChange={this.changeIncorrectPosition} id="incorrectPosition"
-                   placeholder="0, 3" required/>
+                   placeholder="0, 3"/>
             <br/>
 
             <label>Invalid Words:</label>
             <input value={this.state.invalidWords} onChange={this.changeInvalidWords} id="invalidWords"
-                   placeholder="ou" required/>
+                   placeholder="ou"/>
             <br/>
 
             <button type={"submit"}>Get Next Possible Guesses!</button>
