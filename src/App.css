@@ -28,3 +28,7 @@
 .App textarea, .App input{
   font-size: large;
 }
+
+.App button{
+  background: lightgray;
+}

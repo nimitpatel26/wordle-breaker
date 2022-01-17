@@ -30,6 +30,7 @@ class App extends React.Component {
     let invalidCharsList = [];
 
     try {
+
       if (this.state.correctPositions.length !== 0) {
         correctPosList = this.state.correctPositions.split((',')).map(word => parseInt(word.trim()));
       }
@@ -38,7 +39,7 @@ class App extends React.Component {
       }
 
       if (this.state.invalidChars.length !== 0) {
-        invalidCharsList = Array.from(new Set(this.state.invalidChars.split(('')).map(word => word.trim())));
+        invalidCharsList = Array.from(new Set(this.state.invalidChars.split(('')).map(word => word.trim().toLowerCase())));
       }
 
       for(let i of correctPosList){
@@ -74,7 +75,7 @@ class App extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        guess: this.state.guess,
+        guess: this.state.guess.toLowerCase(),
         correctPositions: correctPosList,
         incorrectPositions: incorrectPosList,
         invalidChars: invalidCharsList
