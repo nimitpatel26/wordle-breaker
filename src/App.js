@@ -43,13 +43,13 @@ class App extends React.Component {
 
       for(let i of correctPosList){
         if (isNaN(i) || i >= this.state.guess.length){
-          throw "Invalid index!";
+          throw new Error("Invalid index!");
         }
       }
 
       for(let i of incorrectPosList){
         if (isNaN(i) || i >= this.state.guess.length){
-          throw "Invalid index!";
+          throw new Error("Invalid index!");
         }
       }
 
