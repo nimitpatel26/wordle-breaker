@@ -11,7 +11,7 @@ class App extends React.Component {
       correctPosition: "",
       incorrectPosition: "",
       invalidWords: "",
-      nextGuessList: "",
+      output: "",
     }
 
 
@@ -24,26 +24,56 @@ class App extends React.Component {
 
   async formSubmitted(e) {
     e.preventDefault()
-    // this.setState({
-    //   status: "SMS sending is disabled. You can look at the source code at https://github.com/nimitpatel26/sms-app",
-    // })
-    // this.setState({
-    //     status: "Sending....",
-    // })
-    //
-    // let url = "/.netlify/functions/send-sms?num=" + this.state.number + "&language=" + this.state.language + "&subject=" + this.state.subject + "&message=" + this.state.message
-    //
+
+    let correctPosList = [];
+    let incorrectPosList = [];
+    let invalidWordsList = [];
+
+    try {
+      correctPosList = this.state.correctPosition.split((',')).map(word => parseInt(word.trim()));
+      incorrectPosList = this.state.incorrectPosition.split((',')).map(word => parseInt(word.trim()));
+      invalidWordsList = Array.from(new Set(this.state.invalidWords.split(('')).map(word => word.trim())));
+
+    }catch(e){
+      this.setState({
+        output: "Invalid Input!",
+      });
+      return;
+    }
+
+
+
+    this.setState({
+        output: "Getting next guess list....",
+    })
+
+    let url = "/.netlify/functions/get-guess-prop";
+
+    let resp = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        guess: this.state.guess,
+        correctPositions: correctPosList,
+        incorrectPositions: incorrectPosList,
+        invalidWords: invalidWordsList
+      })
+    });
     // let resp = await fetch(url);
-    //
-    // if (resp.status === 200) {
-    //     this.setState({
-    //         status: "Sent!",
-    //     })
-    // } else {
-    //     this.setState({
-    //         status: "Failed to send SMS!",
-    //     })
-    // }
+
+    if (resp.status === 200) {
+
+      let guessList = await resp.json();
+      this.setState({
+          output: guessList,
+      })
+    } else {
+        this.setState({
+            status: "Failed to get next guess list!",
+        })
+    }
 
   }
 
@@ -93,7 +123,7 @@ class App extends React.Component {
             <button type={"submit"}>Get Next Possible Guesses!</button>
           </form>
           <div>
-            <h3>{this.state.nextGuessList}</h3>
+            <h3>{this.state.output}</h3>
           </div>
         </div>
     );
