@@ -71,6 +71,11 @@ function getNextGuessList(guess, guessProp){
 
 const handler = async (event) => {
   try {
+    return {
+      statusCode: 200,
+      body: JSON.stringify("Stop Cheating!"),
+
+    }
 
     const guessProp = JSON.parse(event.body);
     const guessList = getNextGuessList(guessProp.guess, guessProp);
